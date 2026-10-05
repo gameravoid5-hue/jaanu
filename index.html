@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sirf Tumhare Liye ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Background Audio (No Autoplay without interaction) -->
+  <audio id="bg-music" src="music.MP3" loop preload="auto"></audio>
+
+  <!-- Music Play/Pause Button -->
+  <button id="music-btn" class="music-control" aria-label="Toggle Background Music">
+    <span class="music-dot"></span>
+    <span id="music-label">Play Music 🎵</span>
+  </button>
+
+  <!-- Ambient Bokeh & Floating Particles -->
+  <div id="particles-container">
+    <div class="bokeh bokeh-1"></div>
+    <div class="bokeh bokeh-2"></div>
+    <div class="bokeh bokeh-3"></div>
+  </div>
+
+  <!-- Main Experience Container -->
+  <main class="stage-wrapper">
+
+    <!-- 1. Welcome Screen -->
+    <section id="step-1" class="step-card active">
+      <span class="step-badge">Sirf Tumhare Liye ✨</span>
+      <h1>Oye Suno... Haan, TUM 👀❤️</h1>
+      <p class="subtitle">Maine apni life ki sabse pyari distraction ke liye kuch special banaya hai... dekhogi?</p>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="handleWelcomeClick(event)">
+          Khol Ke Dekho 💌
+        </button>
+      </div>
+    </section>
+
+    <!-- 2. Flirty Question -->
+    <section id="step-2" class="step-card">
+      <span class="step-badge">Ek Zaroori Sawaal 😏</span>
+      <h2>Sach-sach batao... roz-roz itna zyada cute aur killer dikhne ka kya raaz hai?</h2>
+      <p class="subtitle">Soch samajh ke bolna, kyunki mera dil toh pehle hi haar chuka hai.</p>
+      
+      <div class="btn-group">
+        <button class="btn btn-secondary" onclick="answerFlirtyQuestion(1, event)">
+          Mujhe kya pata 🙈
+        </button>
+        <button class="btn btn-primary" onclick="answerFlirtyQuestion(2, event)">
+          Tumhari wajah se 😌
+        </button>
+      </div>
+
+      <div id="flirty-response" class="response-box"></div>
+
+      <div id="step-2-next" class="btn-group" style="display: none;">
+        <button class="btn btn-gold" onclick="goToStep(3, event)">
+          Aage Dekho ✨
+        </button>
+      </div>
+    </section>
+
+    <!-- 3. Cute Compliments + Her Photos (7.jpg to 11.jpg in 9:16) -->
+    <section id="step-3" class="step-card">
+      <span class="step-badge">Dil Ki Baat 💕</span>
+      <h2>Kuch Baatein Jo Tumhe Pata Honi Chahiye...</h2>
+      <div id="compliment-counter" class="compliment-counter">1 of 5 revealed</div>
+
+      <!-- Featured Flirty Card with 9:16 Image + Line -->
+      <div id="featured-compliment-card" class="flirt-photo-card">
+        <div class="flirt-img-wrapper">
+          <img id="compliment-img" src="7.jpg" alt="Cutie" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22360%22 height=%22640%22><defs><linearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop offset=%220%25%22 stop-color=%22%236e142b%22/><stop offset=%22100%25%22 stop-color=%22%232b0912%22/></linearGradient></defs><rect width=%22100%25%22 height=%22100%25%22 fill=%22url(%23g)%22/><text x=%2250%25%22 y=%2246%25%22 font-size=%2248%22 text-anchor=%22middle%22>😍✨</text><text x=%2250%25%22 y=%2256%25%22 font-family=%22sans-serif%22 font-size=%2218%22 fill=%22%23ffb3c6%22 text-anchor=%22middle%22>7.jpg</text></svg>'" />
+        </div>
+        <p id="compliment-text" class="flirt-line-text">"Tumhari yeh smile bilkul unfair hai yaar, seedha dil pe lagti hai 😭❤️"</p>
+      </div>
+
+      <!-- Mini history of revealed compliments -->
+      <div id="compliments-container" class="compliments-list"></div>
+
+      <div class="btn-group">
+        <button id="more-compliment-btn" class="btn btn-primary" onclick="revealNextCompliment(event)">
+          Ek Aur Suno 👀
+        </button>
+        <button id="to-gallery-btn" class="btn btn-gold" style="display: none;" onclick="goToStep(4, event)">
+          Meri Favorite Photos 📸
+        </button>
+      </div>
+    </section>
+
+    <!-- 4. Memory Gallery (photo1.jpg to photo3.jpg in 9:16) -->
+    <section id="step-4" class="step-card">
+      <span class="step-badge">Saboot A, B & C 📸</span>
+      <h2>Saboot Ki Tum Hadd Se Zyada Pyari Ho</h2>
+      <p class="subtitle">Jab bhi in photos ko dekhta hoon, dil ki dhadkan thodi tez ho jaati hai.</p>
+
+      <div class="gallery-grid">
+        <!-- Photo 1 -->
+        <div class="polaroid">
+          <div class="photo-frame">
+            <img src="photo1.jpg" alt="Memory 1" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22360%22 height=%22640%22><defs><linearGradient id=%22g1%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop offset=%220%25%22 stop-color=%22%23590d22%22/><stop offset=%22100%25%22 stop-color=%22%232b0912%22/></linearGradient></defs><rect width=%22100%25%22 height=%22100%25%22 fill=%22url(%23g1)%22/><text x=%2250%25%22 y=%2246%25%22 font-size=%2248%22 text-anchor=%22middle%22>📸❤️</text><text x=%2250%25%22 y=%2256%25%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%23ffb3c6%22 text-anchor=%22middle%22>photo1.jpg</text></svg>'" />
+          </div>
+          <p class="photo-caption">"Yaar... is photo ko dekh ke normal behave karna bohot mushkil hai 😭❤️"</p>
+        </div>
+
+        <!-- Photo 2 -->
+        <div class="polaroid">
+          <div class="photo-frame">
+            <img src="2.jpg" alt="Memory 2" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22360%22 height=%22640%22><defs><linearGradient id=%22g2%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop offset=%220%25%22 stop-color=%22%23800f2f%22/><stop offset=%22100%25%22 stop-color=%22%232b0912%22/></linearGradient></defs><rect width=%22100%25%22 height=%22100%25%22 fill=%22url(%23g2)%22/><text x=%2250%25%22 y=%2246%25%22 font-size=%2248%22 text-anchor=%22middle%22>✨😌</text><text x=%2250%25%22 y=%2256%25%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%23ffb3c6%22 text-anchor=%22middle%22>photo2.jpg</text></svg>'" />
+          </div>
+          <p class="photo-caption">"Bina kisi koshish ke koi itna haseen kaise lag sakta hai? 😌✨"</p>
+        </div>
+
+        <!-- Photo 3 -->
+        <div class="polaroid">
+          <div class="photo-frame">
+            <img src="3.jpg" alt="Memory 3" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22360%22 height=%22640%22><defs><linearGradient id=%22g3%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop offset=%220%25%22 stop-color=%22%23a4133c%22/><stop offset=%22100%25%22 stop-color=%22%232b0912%22/></linearGradient></defs><rect width=%22100%25%22 height=%22100%25%22 fill=%22url(%23g3)%22/><text x=%2250%25%22 y=%2246%25%22 font-size=%2248%22 text-anchor=%22middle%22>🥰💕</text><text x=%2250%25%22 y=%2256%25%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%23ffb3c6%22 text-anchor=%22middle%22>photo3.jpg</text></svg>'" />
+          </div>
+          <p class="photo-caption">"10/10 view. Sach bolun toh tumhe dekhna meri favorite aadat ban gayi hai 💕"</p>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="goToStep(5, event)">
+          Tumhare Liye Ek Khat 💌
+        </button>
+      </div>
+    </section>
+
+    <!-- 5. Love Letter -->
+    <section id="step-5" class="step-card">
+      <span class="step-badge">Secret Note 💌</span>
+      <h2>Sirf Tumhari Aankhon Ke Liye</h2>
+      <p class="subtitle">Zyada bhaav mat khana... chalo thoda sa kha lo, haq hai tumhara.</p>
+
+      <div class="envelope-stage">
+        <!-- Closed Envelope State -->
+        <div id="envelope-closed" class="envelope-box">
+          <div class="wax-seal">❤️</div>
+          <p class="envelope-hint">
+            Isme thoda sa pyar aur bohot saari flirting band hai
+          </p>
+          <button class="btn btn-gold" onclick="openLoveLetter(event)">
+            Himmat Hai Toh Kholo 👀
+          </button>
+        </div>
+
+        <!-- Opened Letter State -->
+        <div id="letter-opened" class="letter-paper">
+          <h3>Hey meri sabse favorite insaan,</h3>
+          <p>
+            Maine socha tha thoda cool banunga, par tumhare saamne saari coolness dhari ki dhari reh jaati hai. Pata nahi kaise, par phone pe sirf tumhara naam dekh ke hi mera poora din ban jaata hai.
+          </p>
+          <p>
+            Tum jitni cute ho, usse kahin zyada special ho. Aur sach kahun toh tumhari aadat ab mujhe har roz thodi aur zyada lagti jaa rahi hai.
+          </p>
+          <div class="letter-sign">Sirf Tumhara (ishuu..) ❤️</div>
+        </div>
+      </div>
+
+      <div id="step-5-next" class="btn-group" style="display: none;">
+        <button class="btn btn-primary" onclick="goToStep(6, event)">
+          Ek Aakhri Sawaal 😏
+        </button>
+      </div>
+    </section>
+
+    <!-- 6. The Naughty Little Question -->
+    <section id="step-6" class="step-card">
+      <span class="step-badge">Serious Inquiry 😏</span>
+      <h2>Toh... itna adorable aur irresistible dikhna kab band kar rahi ho?</h2>
+      <p class="subtitle">Apne dil ki safety ke liye pooch raha hoon bas.</p>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="answerNaughtyQuestion(event)">
+          Kabhi Nahi 😌
+        </button>
+        <button class="btn btn-secondary" onclick="answerNaughtyQuestion(event)">
+          Shayad Kal 👀
+        </button>
+      </div>
+
+      <div id="naughty-response" class="response-box">
+        <strong>Haan... mujhe pata hi tha tum maanogi nahi, aur main bach paunga nahi 😏❤️</strong>
+      </div>
+
+      <div id="step-6-next" class="btn-group" style="display: none;">
+        <button class="btn btn-gold" onclick="goToStep(7, event)">
+          Mera Confession Sunogi? ❤️
+        </button>
+      </div>
+    </section>
+
+    <!-- 7. Final Surprise -->
+    <section id="step-7" class="step-card">
+      <span class="step-badge">The Finale ❤️</span>
+      <h1>Okay, ab ek sachcha confession...</h1>
+
+      <div class="confession-reveal">
+        <div class="confession-big">Tum mujhe sach me bohot, bohot pasand ho. ❤️</div>
+        <p class="subtitle confession-sub">
+          Aur haan... kal bhi main tumhare sath aise hi flirt karne wala hoon, taiyaar rehna. 😌
+        </p>
+      </div>
+
+      <div class="btn-group">
+        <button id="stay-btn" class="btn btn-primary" onclick="triggerFinalChoice(event)">
+          Mere Paas Hi Raho 💕
+        </button>
+      </div>
+
+      <div id="final-response" class="response-box final-msg">
+        Bilkul sahi faisla kiya, Cutie. Ab tum kahin nahi jaa sakti. 😌❤️
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
